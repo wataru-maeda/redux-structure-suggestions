@@ -9,12 +9,13 @@ import {
   UpdateExampleMutation,
   UpdateExampleMutationVariables,
 } from "@modules/generated/graphqlSchema";
-import { UPDATE_EXAMPLE_MUTATION } from "./example.queries";
+import { EXAMPLES_QUERY } from "./example.queries";
 import store from "./example.store";
 
 export function useExample() {
   const dispatch = useDispatch<Dispatch>();
   const useSelector = useExampleSelector((state: State) => state.example);
+  const state = useSelector();
 
   /**
    * update redux store
@@ -28,9 +29,9 @@ export function useExample() {
    * update and store hi in redux
    * @param hi
    */
-  const updateAndStoreHi = (variables: UpdateExampleMutationVariables) => {
+  const fetchAndSetHi = (variables: UpdateExampleMutationVariables) => {
     client
-      .query({ query: UPDATE_EXAMPLE_MUTATION, variables })
+      .query({ query: EXAMPLES_QUERY, variables })
       .then((res) => {
         dispatch(store.actions.setHi(res));
         return res;
@@ -42,5 +43,5 @@ export function useExample() {
       });
   };
 
-  return { dispatch, useSelector, setHi, updateAndStoreHi };
+  return { ...state, setHi, fetchAndSetHi };
 }

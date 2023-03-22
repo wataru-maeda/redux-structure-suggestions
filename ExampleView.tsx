@@ -1,13 +1,12 @@
 import { useExample } from "@modules/example";
 
 function ExampleView() {
-  const { useSelector, setHi, updateAndStoreHi } = useExample();
-  const { hi } = useSelector();
+  const { hi, setHi, fetchAndSetHi } = useExample();
 
   return (
     <div>
       <h1>{hi}</h1>
-      <button onClick={() => updateAndStoreHi("HELLO!")}>Set Hi!</button>
+      <button onClick={() => fetchAndSetHi()}>Set Hi!</button>
       <button onClick={() => setHi(undefined)}>Reset Hi</button>
     </div>
   );
